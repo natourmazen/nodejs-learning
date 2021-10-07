@@ -2,10 +2,12 @@ const express = require('express');
 const { boolean } = require('joi');
 const router = express.Router();
 const { Customer, validate } = require('../models/customer');
+const mongoose = require('mongoose');
 
 router.get('/', async (req, res) => {
     res.send(await Customer.find());
 });
+
 
 router.post('/', async (req, res) => {
     let {error} = validate( {
@@ -15,16 +17,15 @@ router.post('/', async (req, res) => {
     } );
     if (error) return res.status(400).send(error.details[0].message);
     
-    let genre = new Genre({ 
+    let customer = new Customer({ 
+        _id: mongoose.Types.ObjectId(),
         name: req.body.name,
         phone: req.body.phone,
         isGold: req.body.isGold
     });
-    genre = await genre.save();
+    customer = await customer.save();
     
-    res.send(genre);
+    res.send(customer);
 });
-
-
 
 module.exports = router;

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Genre, validate } = require('../models/genre');
+const mongoose = require('mongoose');
 
 router.get('/', async (req, res) => {
     res.send(await Genre.find());
@@ -10,7 +11,10 @@ router.post('/', async (req, res) => {
     let {error} = validate( {'name':req.body.name} );
     if (error) return res.status(400).send(error.details[0].message);
     
-    let genre = new Genre({ name: req.body.name });
+    let genre = new Genre({
+        _id: mongoose.Types.ObjectId(),
+        name: req.body.name
+    });
     genre = await genre.save();
     
     res.send(genre);
