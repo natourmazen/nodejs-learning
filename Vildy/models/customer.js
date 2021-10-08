@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const Joi = require('joi');
 const { boolean } = require('joi');
 
-const customerSchema = new mongoose.Schema({
+const customerSchema = mongoose.Schema({
+    _id: mongoose.Types.ObjectId,
     name: {
       type: String,
       required: true,
@@ -33,5 +34,6 @@ function validateCustomer(customer) {
     return schema.validate(customer);
 }
 
+exports.customerSchema = customerSchema;
 exports.Customer = Customer;
-exports.validate = validateCustomer;
+exports.validateCustomer = validateCustomer;

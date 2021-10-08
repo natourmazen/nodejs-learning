@@ -27,4 +27,4 @@ function validateMovie(movie) {
 
 exports.movieSchema = movieSchema;
 exports.Movie = Movie;
-exports.validate = validateMovie;
+exports.validateMovie = validateMovie;
